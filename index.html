@@ -3,59 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hel1o W0rld</title>
+    <title>墨染青程</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
+        :root {
+            --bg-dark: #0a1929;
+            --text-light: #e0f7ff;
+            --text-muted: #8da9c4;
+            --accent-primary: #00a8ff;
+            --accent-secondary: #0077b6;
+            --card-bg: #14253d;
+        }
+
         body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             font-family: 'Helvetica', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            margin: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
-        .card {
-            background: rgba(255, 255, 255, 0.1);
+
+        /* 导航栏 */
+        .navbar {
+            background-color: rgba(10, 25, 41, 0.95) !important;
             backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-        h1 { margin-bottom: 2rem; }
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        a {
-            display: block;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+            border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+            padding: 1rem 0;
             transition: all 0.3s ease;
         }
-        a:hover {
-            background: rgba(255, 255, 255, 0.3);
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+            color: var(--accent-primary) !important;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-primary) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(10, 25, 41, 0.8), rgba(10, 25, 41, 0.9));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #e0f7ff, #00a8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0, 168, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        /* 按钮样式 */
+        .btn-primary {
+            background: var(--accent-primary);
+            border: none;
+            padding: 0.8rem 2.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-secondary);
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            background: transparent;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 作品集部分 */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-primary);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 168, 255, 0.2);
+        }
+
+        .project-img {
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* 关于部分 */
+        .about-section {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0c2039 100%);
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            background: rgba(142, 169, 196, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg, #081420 0%, #0a1929 100%);
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .social-links {
+            font-size: 1.8rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        /* 工具类 */
+        .text-gradient {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>回家的路</h1>
-        <p></p>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">主页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">点一单</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">关于</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">加入我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://cdn.pixabay.com/video/2023/02/21/158322-800691917_large.mp4" type="video/mp4">
+        </video>
         
-        <div class="link-grid">
-            <a href="https://www.douyin.com/user/MS4wLjABAAAAo7oWUeiom1S-Cx_N2xdMWHMY6k3fJ47b_JRtzITKMzU" target="_blank">路线一</a>
-            <a href="https://www.douyin.com/user/MS4wLjABAAAAnf2KHxtVB9kgV5BrpjXNqtwBlzapdFODv9-S9at6k2jF0SPfx7qh3HbGwL8jHPuY?from_tab_name=main" target="_blank">路线二</a>
-            <a href="https://space.bilibili.com/1800450897?spm_id_from=333.1387.follow.user_card.click" target="_blank">路线三</a>
-            <a href="mailto:158000053@qq.com">高速路线</a>
+        <div class="container hero-content">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">墨染青程</h1>
+                    <p class="hero-subtitle">​​隐秘​​而​​甄选，专注于用​​颠覆​​性的理念，为客户缔造​​非凡​​的价值与体验。</p>
+                    <a href="#projects" class="btn btn-primary btn-lg">了解详情</a>
+                    <a href="#contact" class="btn btn-outline-primary btn-lg ms-3">加入我们</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集部分 -->
+    <section id="projects" class="py-5" style="padding-top: 100px !important;">
+        <div class="container py-5">
+            <h2 class="section-title">旗下艺人</h2>
+            <div class="row">
+                <!-- 项目 1 -->
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813c001_og383BEWEq7GBWAesb5eSIEeKtAIBn4LpADAAB~c5_300x300.jpeg?from=2956013662" class="project-img" alt="sz">
+                        <div class="project-content">
+                            <h3 class="project-title">签约主播 桂少</h3>
+                            <p class="project-description">和平精英多赛季无敌战神 瓦手高kd赋能</p>
+                            <a href="https://www.douyin.com/user/MS4wLjABAAAAo7oWUeiom1S-Cx_N2xdMWHMY6k3fJ47b_JRtzITKMzU?from_tab_name=main&is_search=1&list_name=follow&nt=0" class="btn btn-outline-primary">52r/h</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 2 -->
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-avt-0015_f463f78c70420cb5b9b5d154aa317030~c5_300x300.jpeg?from=2956013662" class="project-img" alt="sz">
+                        <div class="project-content">
+                            <h3 class="project-title">签约主播 磙</h3>
+                            <p class="project-description">和平精英单字id 磙</p>
+                            <a href="https://space.bilibili.com/1800450897?spm_id_from=333.1387.follow.user_card.click" class="btn btn-outline-primary">88r/h</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 3 -->
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-avt-0015_2d61f052c4dd758e4fb8056526fec7b6~c5_300x300.jpeg?from=2956013662" class="project-img" alt="sz">
+                        <div class="project-content">
+                            <h3 class="project-title">打手 cyeu</h3>
+                            <p class="project-description">周一到周五不接单 周六仅一小时接单</p>
+                            <a href="https://www.douyin.com/user/MS4wLjABAAAAOJIhgf7ytrzAPjBI5CJuY7lZx1xd-y1fjVCwaxdlQ4QBp9ZK9yBD6Oje45oIHlNo?from_tab_name=main&is_search=0&list_name=fans&nt=0" class="btn btn-outline-primary">8.8r/h</a>
+                        </div>
+                    </div>
+                </div>
+             <!-- 项目 4 -->
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_oAoANQYTACsEDAF9pAfIhEAAAmAQgjfCTBMDE1~c5_300x300.jpeg?from=2956013662" class="project-img" alt="sz">
+                        <div class="project-content">
+                            <h3 class="project-title">打手 i7</h3>
+                            <p class="project-description">SZ</p>
+                            <a href="https://www.douyin.com/user/MS4wLjABAAAAQTxCnjb-_MErH5SRiQiIW_dAT9jH8Qep-ktm2raTd642eI2A6XBQHlDjgeGa7Z0B?from_tab_name=main&is_search=0&list_name=fans&nt=0" class="btn btn-outline-primary">-250/h</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于部分 -->
+    <section id="about" class="about-section py-5">
+        <div class="container py-5">
+            <h2 class="section-title">关于我们</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <p>多赛季无敌战神，高KD顶尖玩家带队。专注于高端对局战术分析与提升，用实力带你体验战神视角的和平精英</p>
+                        <p>「墨染青程 | 专为追求极致的玩家提供高端教学、陪玩、战术定制服务。我们的战绩，就是你的保障。</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h4 class="text-gradient mb-4">数据</h4>
+                    <div class="skill-item">
+                        <div class="skill-name">KDA</div>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">操作</div>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">价格</div>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">封禁记录</div>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 微信二维码模态框 -->
+<div class="modal fade" id="wechatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-light">关注微信公众号</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src=https://github.com/Liunb6666/liunb6666.github.io/blob/main/wxgzh.png alt="微信二维码" class="img-fluid rounded" style="max-width: 300px;">
+                <p class="text-muted mt-3">拿起手机扫码关注</p>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- 页脚 -->
+<footer id="contact">
+    <div class="container text-center">
+        <h3 class="text-gradient">加入我们</h3>
+        <p class="text-muted">有兴趣被圈？欢迎加入我们！</p>
+        
+        <div class="social-links">
+            <a href="javascript:void(0);" title="公众号" onclick="showWechatQR()"><i class="bi bi-wechat"></i></a>
+
+            <a href="https://www.douyin.com/user/MS4wLjABAAAAo7oWUeiom1S-Cx_N2xdMWHMY6k3fJ47b_JRtzITKMzU?from_tab_name=main" title="抖音"><i class="bi bi-tiktok"></i></a>
+            <a href="mailto:158000053@qq.com" title="邮箱"><i class="bi bi-envelope"></i></a>
+        </div>
+        
+        <p class="copyright">原来的墨青网游</p>
+    </div>
+</footer>
+
+<script>
+function showWechatQR() {
+    const modal = new bootstrap.Modal(document.getElementById('wechatModal'));
+    modal.show();
+}
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
