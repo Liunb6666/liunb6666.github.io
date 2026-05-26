@@ -44,61 +44,82 @@
             .grade-badge {
                 @apply px-2 py-0.5 rounded text-xs font-bold ml-1 bg-gray-500 text-white;
             }
+            .grade-Aplus { @apply bg-red-500; }
+            .grade-A { @apply bg-orange-500; }
+            .grade-Bplus { @apply bg-yellow-500; }
+            .grade-B { @apply bg-green-500; }
+            .grade-Cplus { @apply bg-blue-500; }
+            .grade-C { @apply bg-purple-500; }
             .nav-link {
                 @apply text-gray-600 hover:text-gray-800 transition-colors text-sm font-medium;
+            }
+            /* 响应式适配补充 */
+            .container-responsive {
+                @apply w-full max-w-4xl px-4 mx-auto;
+            }
+            .card-responsive {
+                @apply w-full rounded-2xl card-shadow p-4 sm:p-6;
             }
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- 导航栏 -->
+    <!-- 导航栏（响应式优化） -->
     <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-2xl mx-auto px-4">
-            <div class="flex justify-between h-14 items-center">
-                <div class="flex items-center">
-                    <i class="fa fa-graduation-cap text-gray-600 text-xl mr-2"></i>
-                    <span class="text-lg font-bold text-gray-800">逐梦志愿</span>
-                </div>
-                <div class="flex items-center">
-                    <a href="https://szeb.sz.gov.cn/szzkw/ztzl/szzkjsnlqfsxcx/" target="_blank" class="nav-link">
-                        <i class="fa fa-external-link mr-1"></i>
-                        官方查分
-                    </a>
-                </div>
+        <div class="container-responsive h-14 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa fa-graduation-cap text-gray-600 text-xl mr-2"></i>
+                <span class="text-lg font-bold text-gray-800">逐梦志愿</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- 新增：模考定位入口 -->
+                <a href="exam-location.html" class="nav-link">
+                    <i class="fa fa-map-marker mr-1"></i>
+                    模考定位
+                </a>
+                <a href="https://szeb.sz.gov.cn/szzkw/ztzl/szzkjsnlqfsxcx/" target="_blank" class="nav-link">
+                    <i class="fa fa-external-link mr-1"></i>
+                    官方查分
+                </a>
+                <!-- 新增：查看已保存志愿入口 -->
+                <button onclick="openSavedVolunteerModal()" class="nav-link">
+                    <i class="fa fa-folder-open mr-1"></i>
+                    已存志愿
+                </button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-2xl mx-auto px-4 py-6">
-        <!-- 计算器卡片 -->
-        <div class="bg-white rounded-2xl card-shadow p-6 mb-6">
-            <h2 class="text-xl font-bold mb-2 text-center text-gray-800">智能志愿填报计算器</h2>
+    <main class="container-responsive py-6">
+        <!-- 计算器卡片（响应式优化） -->
+        <div class="bg-white card-responsive mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold mb-2 text-center text-gray-800">智能志愿填报计算器</h2>
             <p id="countdown" class="text-center text-gray-600 mb-5 text-sm"></p>
             
-            <!-- 各科分数输入 -->
+            <!-- 各科分数输入（响应式网格） -->
             <div class="mb-5">
                 <h3 class="text-base font-semibold mb-4 text-gray-700">输入各科成绩</h3>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             语文 <span id="chineseGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="chinese" placeholder="0-120" min="0" max="120" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             数学 <span id="mathGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="math" placeholder="0-100" min="0" max="100" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             英语笔试 <span id="englishGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="english" placeholder="0-75" min="0" max="75" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                         <p class="text-xs text-gray-500 mt-1">总分已加上听说考试分数</p>
                     </div>
                     <div>
@@ -106,32 +127,32 @@
                             物理 <span id="physicsGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="physics" placeholder="0-70" min="0" max="70" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             化学 <span id="chemistryGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="chemistry" placeholder="0-50" min="0" max="50" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             历史 <span id="historyGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="history" placeholder="0-70" min="0" max="70" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             道法 <span id="politicsGrade" class="grade-badge hidden"></span>
                         </label>
                         <input type="number" id="politics" placeholder="0-50" min="0" max="50" 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                               class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" oninput="updateCalculation()">
                     </div>
-                    <div>
+                    <div class="sm:col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 mb-2">模考类型</label>
-                        <select id="examType" class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base">
+                        <select id="examType" class="w-full px-4 py-3 border border-gray-200 rounded-xl input-focus text-base" onchange="updateCalculation()">
                             <option value="longgang2">龙岗区二模</option>
                             <option value="futian2">福田区二模</option>
                             <option value="longhua2">龙华区二模</option>
@@ -145,8 +166,8 @@
                 </div>
             </div>
             
-            <!-- 总分和等级显示 -->
-            <div class="bg-lighter rounded-xl p-5 mb-5 border border-gray-100">
+            <!-- 总分和等级显示（响应式） -->
+            <div class="bg-lighter rounded-xl p-4 sm:p-5 mb-5 border border-gray-100">
                 <div class="grid grid-cols-2 gap-4 text-center">
                     <div>
                         <p class="text-xs text-gray-500 mb-1">最终总分</p>
@@ -159,11 +180,19 @@
                 </div>
             </div>
             
-            <button onclick="calculateAll()" 
-                    class="w-full bg-gray-700 hover:bg-gray-800 text-white font-medium py-3.5 px-6 rounded-xl transition-all flex items-center justify-center text-base hover-lift">
-                <i class="fa fa-calculator mr-2"></i>
-                一键计算志愿方案
-            </button>
+            <!-- 按钮组（响应式，新增保存按钮） -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="calculateAll()" 
+                        class="w-full bg-gray-700 hover:bg-gray-800 text-white font-medium py-3.5 px-6 rounded-xl transition-all flex items-center justify-center text-base hover-lift">
+                    <i class="fa fa-calculator mr-2"></i>
+                    一键计算志愿方案
+                </button>
+                <button onclick="saveVolunteerPlan()" id="saveBtn" disabled
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3.5 px-6 rounded-xl transition-all flex items-center justify-center text-base hover-lift disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    <i class="fa fa-save mr-2"></i>
+                    保存志愿方案
+                </button>
+            </div>
             
             <!-- 结果区域 -->
             <div id="result" class="mt-6 hidden">
@@ -178,21 +207,41 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- 页脚（响应式优化） -->
     <footer class="bg-white border-t border-gray-100 py-4 mt-6">
-        <div class="max-w-2xl mx-auto px-4 text-center text-gray-500 text-xs">
+        <div class="container-responsive text-center text-gray-500 text-xs">
             <p>逐梦志愿 | 数据仅供参考</p>
         </div>
     </footer>
 
-    <!-- 编辑学校的弹窗 -->
+    <!-- 编辑学校的弹窗（响应式优化） -->
     <div id="editModal" class="fixed inset-0 bg-black/40 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-5 w-full max-w-sm max-h-[70vh] overflow-hidden flex flex-col">
+        <div class="bg-white rounded-2xl p-5 w-full max-w-sm max-h-[80vh] overflow-hidden flex flex-col sm:max-h-[70vh]">
             <h4 class="text-base font-bold mb-4">更换志愿学校</h4>
             <div id="schoolList" class="flex-1 overflow-y-auto space-y-2">
                 <!-- 学校列表将在这里生成 -->
             </div>
             <button onclick="closeEditModal()" class="w-full mt-4 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 text-sm">取消</button>
+        </div>
+    </div>
+
+    <!-- 新增：已保存志愿弹窗 -->
+    <div id="savedVolunteerModal" class="fixed inset-0 bg-black/40 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-5 w-full max-w-lg max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="text-base font-bold">已保存的志愿方案</h4>
+                <button onclick="closeSavedVolunteerModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div id="savedVolunteerContent" class="flex-1 overflow-y-auto space-y-3">
+                <!-- 已保存志愿内容 -->
+                <div class="text-center text-gray-500 py-8" id="noSavedData">
+                    <i class="fa fa-folder-open text-2xl mb-2"></i>
+                    <p>暂无保存的志愿方案</p>
+                </div>
+            </div>
+            <button onclick="closeSavedVolunteerModal()" class="w-full mt-4 px-4 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 text-sm">关闭</button>
         </div>
     </div>
 
@@ -238,9 +287,7 @@
             {name: "深圳中学数理高中", futian2:399, longgang2:385, longhua2:403, luohu2:366, futian1:379, longgang1:387, longhua1:379, luohu1:380},
             {name: "深圳中学实验高中", futian2:399, longgang2:385, longhua2:403, luohu2:366, futian1:379, longgang1:387, longhua1:379, luohu1:380},
             {name: "第二高级中学深汕实验学校", futian2:397, longgang2:383, longhua2:401, luohu2:364, futian1:377, longgang1:385, longhua1:377, luohu1:378},
-            {name: "深圳市艺术高中", futian2:395, longgang2:381, longhua2:399, luohu2:362, futian1:375, longgang1:383, longhua1:375, luohu1:376},
-            {name: "布吉中学", futian2:393, longgang2:379, longhua2:397, luohu2:360, futian1:373, longgang1:380, longhua1:373, luohu1:373},
-            {name: "深圳市美术学校", futian2:390, longgang2:376, longhua2:394, luohu2:357, futian1:369, longgang1:377, longhua1:369, luohu1:370}
+            {name: "深圳市艺术高中", futian2:395, longgang2:381, longhua2:399, luohu2:362, futian1:375, longgang1:383, longhua1:375, luohu1:376}
         ];
 
         // 各区模考等级线配置
@@ -333,6 +380,13 @@
         let currentExamType = '';
         let volunteers = [];
 
+        // 页面初始化
+        window.onload = function() {
+            initCountdown();
+            updateCalculation();
+            loadSavedVolunteers();
+        };
+
         // 初始化倒计时
         function initCountdown() {
             const now = new Date();
@@ -342,7 +396,7 @@
             document.getElementById('countdown').textContent = `同学你好，现在距离志愿填报结束还有 ${days} 天`;
         }
 
-        // 获取等级（修复：正确调用函数）
+        // 获取等级
         function getGrade(score, lines) {
             if (!lines || score === 0) return 'C';
             for (const [grade, line] of Object.entries(lines)) {
@@ -424,6 +478,9 @@
                 updateGrade('politicsGrade', politics, currentLines.politics);
                 updateGrade('totalGrade', finalTotal, currentLines.total);
             }
+
+            // 启用/禁用保存按钮（只有生成志愿后才能保存）
+            document.getElementById('saveBtn').disabled = volunteers.length === 0;
         }
 
         // 打开编辑弹窗
@@ -486,7 +543,7 @@
             currentEditIndex = -1;
         }
 
-        // 计算所有，生成志愿方案（修复：标准12个志愿）
+        // 计算所有，生成志愿方案
         function calculateAll() {
             updateCalculation();
 
@@ -522,7 +579,7 @@
                 const diff = finalScore - score;
 
                 // 优化：更合理的分差区间
-                if (diff >= -20 && diff < 0) {
+                if (diff >= -15 && diff < 0) {
                     rushSchools.push({
                         name: school.name,
                         score: score,
@@ -530,15 +587,15 @@
                         type: '冲',
                         typeText: '冲刺志愿，有机会录取'
                     });
-                } else if (diff >= 0 && diff <= 15) {
+                } else if (diff >= 0 && diff <= 5) {
                     parallelSchools.push({
                         name: school.name,
                         score: score,
                         diff: diff,
-                        type: '平',
+                        type: '稳',
                         typeText: '平行志愿，录取概率较高'
                     });
-                } else if (diff > 15 && diff <= 50) {
+                } else if (diff > 15 && diff <= 40) {
                     safeSchools.push({
                         name: school.name,
                         score: score,
@@ -549,7 +606,7 @@
                 }
             });
 
-            // 修复：标准12个志愿：冲3 + 平6 + 保3
+            // 标准12个志愿：冲3 + 平6 + 保3
             rushSchools.sort((a, b) => b.score - a.score);
             const finalRush = rushSchools.slice(0, 3);
 
@@ -564,6 +621,7 @@
 
             const container = document.getElementById('volunteerList');
             container.innerHTML = '';
+            document.getElementById('result').classList.remove('hidden');
 
             if (volunteers.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 py-8">没有找到匹配的学校，请检查你的分数是否正确</p>';
@@ -587,40 +645,130 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="text-sm text-gray-600 space-y-1">
-                            <p>学校分数线：${v.score}分</p>
-                            <p>你的分数：${finalScore.toFixed(0)}分</p>
-                            <p>分差：${v.diff > 0 ? '+' : ''}${v.diff.toFixed(0)}分</p>
-                            <p class="text-xs text-gray-500">${v.typeText}</p>
-                        </div>
+                        <p class="text-xs text-gray-600 mb-1">学校分数线：${v.score}分</p>
+                        <p class="text-xs text-gray-600 mb-2">分差：${v.diff > 0 ? '+' : ''}${v.diff.toFixed(0)}分</p>
+                        <p class="text-xs text-gray-500 italic">${v.typeText}</p>
                     `;
                     container.appendChild(card);
                 });
             }
 
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            // 更新保存按钮状态
+            document.getElementById('saveBtn').disabled = false;
         }
 
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initCountdown();
+        // 保存志愿方案到本地存储
+        function saveVolunteerPlan() {
+            if (volunteers.length === 0) {
+                alert('暂无志愿方案可保存，请先计算志愿！');
+                return;
+            }
 
-            const inputs = document.querySelectorAll('input[type="number"]');
-            inputs.forEach(input => {
-                input.addEventListener('input', updateCalculation);
-            });
-
-            document.getElementById('examType').addEventListener('change', updateCalculation);
-
-            document.getElementById('editModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeEditModal();
+            const saveData = {
+                createTime: new Date().toLocaleString(),
+                examType: currentExamType,
+                finalScore: currentFinalScore,
+                volunteers: volunteers,
+                scores: {
+                    chinese: parseFloat(document.getElementById('chinese').value) || 0,
+                    math: parseFloat(document.getElementById('math').value) || 0,
+                    english: parseFloat(document.getElementById('english').value) || 0,
+                    physics: parseFloat(document.getElementById('physics').value) || 0,
+                    chemistry: parseFloat(document.getElementById('chemistry').value) || 0,
+                    history: parseFloat(document.getElementById('history').value) || 0,
+                    politics: parseFloat(document.getElementById('politics').value) || 0
                 }
-            });
+            };
 
-            updateCalculation();
-        });
+            // 读取现有保存的志愿
+            let savedPlans = JSON.parse(localStorage.getItem('savedVolunteers') || '[]');
+            savedPlans.unshift(saveData); // 添加到开头
+            if (savedPlans.length > 5) {
+                savedPlans = savedPlans.slice(0, 5); // 最多保存5条
+            }
+
+            localStorage.setItem('savedVolunteers', JSON.stringify(savedPlans));
+            alert('志愿方案保存成功！');
+        }
+
+        // 打开已保存志愿弹窗
+        function openSavedVolunteerModal() {
+            const modal = document.getElementById('savedVolunteerModal');
+            const content = document.getElementById('savedVolunteerContent');
+            const noData = document.getElementById('noSavedData');
+
+            // 读取保存的志愿
+            const savedPlans = JSON.parse(localStorage.getItem('savedVolunteers') || '[]');
+            
+            content.innerHTML = '';
+            
+            if (savedPlans.length === 0) {
+                content.appendChild(noData);
+            } else {
+                savedPlans.forEach((plan, planIndex) => {
+                    const planCard = document.createElement('div');
+                    planCard.className = 'bg-lighter rounded-xl p-4 border border-gray-100 mb-3';
+                    
+                    // 模考类型文本映射
+                    const examTypeMap = {
+                        longgang2: '龙岗区二模',
+                        futian2: '福田区二模',
+                        longhua2: '龙华区二模',
+                        luohu2: '罗湖区二模',
+                        longgang1: '龙岗区一模',
+                        futian1: '福田区一模',
+                        longhua1: '龙华区一模',
+                        luohu1: '罗湖区一模'
+                    };
+
+                    planCard.innerHTML = `
+                        <div class="flex justify-between items-center mb-3">
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">${examTypeMap[plan.examType] || plan.examType}</p>
+                                <p class="text-xs text-gray-500">总分：${plan.finalScore.toFixed(0)}分 | ${plan.createTime}</p>
+                            </div>
+                            <button onclick="deleteSavedPlan(${planIndex})" class="text-red-500 text-xs">
+                                <i class="fa fa-trash"></i> 删除
+                            </button>
+                        </div>
+                        <div class="space-y-2 max-h-60 overflow-y-auto">
+                            ${plan.volunteers.map((v, index) => `
+                                <div class="flex items-center justify-between text-xs p-2 bg-white rounded-lg">
+                                    <div>
+                                        <span class="font-medium text-gray-700">${['第一', '第二', '第三', '第四', '第五', '第六', '第七', '第八', '第九', '第十', '第十一', '第十二'][index]}志愿：</span>
+                                        <span class="text-gray-800">${v.name}</span>
+                                    </div>
+                                    <span class="px-1.5 py-0.5 rounded-full text-xs font-bold bg-gray-600 text-white">${v.type}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    content.appendChild(planCard);
+                });
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        // 关闭已保存志愿弹窗
+        function closeSavedVolunteerModal() {
+            document.getElementById('savedVolunteerModal').classList.add('hidden');
+        }
+
+        // 删除保存的志愿方案
+        function deleteSavedPlan(index) {
+            if (confirm('确定要删除这条志愿方案吗？')) {
+                let savedPlans = JSON.parse(localStorage.getItem('savedVolunteers') || '[]');
+                savedPlans.splice(index, 1);
+                localStorage.setItem('savedVolunteers', JSON.stringify(savedPlans));
+                openSavedVolunteerModal(); // 重新加载列表
+            }
+        }
+
+        // 加载已保存志愿（页面初始化时）
+        function loadSavedVolunteers() {
+            // 仅初始化，无具体操作，主要在打开弹窗时加载
+        }
     </script>
 </body>
 </html>
