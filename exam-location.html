@@ -37,28 +37,28 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- 导航栏（和主页面完全一致） -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
-        <div class="container-responsive h-14 flex items-center justify-between">
-            <div class="flex items-center">
+<nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+    <div class="container-responsive h-14 flex items-center justify-between">
+        <div class="flex items-center">
+            <!-- 新增a标签指向index.html -->
+            <a href="index.html" class="flex items-center hover:text-gray-700 transition-colors">
                 <i class="fa fa-graduation-cap text-gray-600 text-xl mr-2"></i>
                 <span class="text-lg font-bold text-gray-800">逐梦志愿</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <a href="exam-location.html" class="nav-link font-bold text-gray-800">
-                    <i class="fa fa-map-marker mr-1"></i>模考定位
-                </a>
-                <a href="https://szeb.sz.gov.cn/szzkw/ztzl/szzkjsnlqfsxcx/" target="_blank" class="nav-link">
-                    <i class="fa fa-external-link mr-1"></i>官方查分
-                </a>
-                <a href="saved-volunteers.html" class="nav-link">
-                    <i class="fa fa-folder-open mr-1"></i>已存志愿
-                </a>
-            </div>
+            </a>
         </div>
-    </nav>
-
+        <div class="flex items-center gap-4">
+            <a href="exam-location.html" class="nav-link font-bold text-gray-800">
+                <i class="fa fa-map-marker mr-1"></i>模考定位
+            </a>
+            <a href="https://szeb.sz.gov.cn/szzkw/ztzl/szzkjsnlqfsxcx/" target="_blank" class="nav-link">
+                <i class="fa fa-external-link mr-1"></i>官方查分
+            </a>
+            <a href="saved-volunteers.html" class="nav-link">
+                <i class="fa fa-folder-open mr-1"></i>已存志愿
+            </a>
+        </div>
+    </div>
+</nav>
     <main class="container-responsive py-6">
         <!-- 模考定位核心内容 -->
         <div class="bg-white card-responsive">
